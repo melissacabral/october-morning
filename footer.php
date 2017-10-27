@@ -2,6 +2,12 @@
 	<!-- end .wrapper -->
 
 	<footer class="footer contentinfo">
+		<div class="footer-widgets">
+			<?php dynamic_sidebar( 'Footer Area' ); ?>
+		</div>
+
+
+
 		<small>
 			&copy; 2017 by <?php bloginfo( 'name' ); ?>. All Rights Reserved.
 		</small>

@@ -1,6 +1,6 @@
 <?php get_header(); //includes header.php ?>
 
-<main class="content">
+<main class="content" id="content">
 
 	<?php 
 	//THE LOOP. this is the same on every template
@@ -35,6 +35,26 @@
 
 <?php 
 	endwhile;
+?>
+	<section class="pagination">
+		<?php 
+		//show next/previous on devices, numbered pagination on desktops
+		if( wp_is_mobile() ):
+			//Previous & Next button
+			previous_posts_link( "&larr; Fresher Posts" );
+			next_posts_link( "Earlier Posts &rarr;" );
+		else:
+			//numbered pagination for desktops
+			the_posts_pagination( array(
+				'next_text' => 'Next &rarr;',
+				'prev_text' => '&larr; Previous',
+				'mid_size' => 2,
+			) );
+		endif;
+		?>		
+	</section>
+
+<?php
 else:
 	echo 'Sorry, no posts found';	
 endif; 

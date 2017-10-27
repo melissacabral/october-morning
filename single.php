@@ -14,6 +14,11 @@
 
 		<div class="entry-content">
 			<?php the_content(); //full post body ?>
+			<?php wp_link_pages( array(
+				'before' => '<div class="post-pagination">Keep Reading this Post:',
+				'after' 		=> '</div>',
+				'next_or_number' => 'number',
+			) ); ?>
 		</div>
 		<div class="postmeta">
 			<span class="author">by: <?php the_author(); ?> </span>
@@ -28,10 +33,20 @@
 	</article>
 	<!-- end .post -->
 
-	<?php comments_template(); //show comment list and comment form ?>
+	
 
 <?php 
 	endwhile;
+?>
+	<section class="pagination">
+		<?php previous_post_link( '%link', '&larr; Earlier: %title' );  //one older post ?>
+		<?php next_post_link( '%link', 'Later: %title &rarr;' );  //one newer post ?>
+	</section>
+
+
+	<?php comments_template(); //show comment list and comment form ?>
+
+<?php
 else:
 	echo 'Sorry, no posts found';	
 endif; 
