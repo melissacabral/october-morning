@@ -172,9 +172,20 @@ function oct_widget_areas(){
 add_action( 'widgets_init', 'oct_widget_areas' );
 
 
-
-
-
+/**
+ * Easier function to output custom fields as a comma-separated list
+ */
+function oct_field_list( $label = '', $field = '' ){
+    global $post;
+    $values = get_post_meta( $post->ID, $field );
+    if( $values ):
+    ?>
+    <div class="<?php echo $field; ?>"><?php echo $label; ?>:        
+        <?php echo implode(', ', $values ); ?>
+    </div>
+    <?php
+    endif;
+}
 
 
 
