@@ -249,15 +249,46 @@ article {
     color: black; }
 
 /* ==widgets */
-.home-widgets .widget {
-  width: 33%;
-  float: left;
-  min-width: 200px;
-  text-align: center; }
+.home-widgets {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around; }
+  .home-widgets .widget {
+    width: 33%;
+    min-width: 300px; }
 
 /* ==footer */
 .footer {
-  background-color: rgba(0, 0, 0, 0.1); }
+  background-color: rgba(0, 0, 0, 0.1);
+  clear: both; }
+
+.footer-widgets {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  justify-content: space-around; }
+  .footer-widgets .widget {
+    text-align: left;
+    min-width: 300px; }
 
 /* = WordPress Core */
 .alignnone {
