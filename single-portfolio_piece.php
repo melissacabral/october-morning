@@ -8,7 +8,7 @@
 	
 	<section <?php post_class(); ?>>
 		<div class="hero-image">
-			<?php the_post_thumbnail( 'large' ); ?>
+			<?php the_post_thumbnail( 'banner' ); ?>
 			<h2 class="piece-title"><?php the_title(); ?></h2>
 			
 			<?php oct_field_list('Year', 'year'); ?>

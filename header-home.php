@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html <?php language_attributes(); ?>>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" 
-			href="<?php echo get_stylesheet_uri(); ?>">
-	<link href="https://fonts.googleapis.com/css?family=Montserrat%7CSource+Sans+Pro" rel="stylesheet">
 
 	<?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
 </head>
 <body <?php body_class(); ?>>
 
-	<header class="header" 
+	<header class="header" id="top"
 			style="background-image:url(<?php header_image() ?>);">
 		<div class="wrapper">
 

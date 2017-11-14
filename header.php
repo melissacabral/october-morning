@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html <?php language_attributes(); ?>>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" 
-			href="<?php echo get_stylesheet_uri(); ?>">
-			<link href="https://fonts.googleapis.com/css?family=Montserrat%7CSource+Sans+Pro" rel="stylesheet">
-
 	<?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
 </head>
 <body <?php body_class(); ?>>
 
-	<header class="header" 
+	<header class="header" id="top"
 			style="background-image:url(<?php header_image() ?>);">
 		<div class="wrapper">
 
 
 			<h1 class="site-title"><a href="<?php echo home_url(); ?>">
 				<?php bloginfo( 'name' ); ?></a></h1>
+
+				<?php 
+			//show the search if not on the front page
+			if( ! is_front_page() ):
+				get_search_form(); //searchform.php or default search form 
+			endif;
+			?>
 		
 			
 			<!-- https://codepen.io/melissacabral/pen/ZXgxov -->
@@ -42,13 +45,14 @@
 				'link_before' => '<span class="screen-reader-text">',
 				'link_after' => '</span>',
 			) ); ?>
-
-			<?php 
-			//show the search if not on the front page
-			if( ! is_front_page() ):
-				get_search_form(); //searchform.php or default search form 
-			endif;
-			?>
-		</div>
+			
+		</div><!-- end .wrapper -->
 	</header>
+
 	<div class="wrapper">
+		<?php 
+			//display the current cart if we're on a woocommerce page
+			if(is_woocommerce()): 
+				oct_header_cart();
+			 endif; 
+			 ?>

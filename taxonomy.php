@@ -22,7 +22,7 @@
 	<section <?php post_class(); ?>>
 		<div class="hero-image">
 			<a href="<?php the_permalink(); ?>">
-				<?php the_post_thumbnail( 'large' ); ?>
+				<?php the_post_thumbnail( 'banner' ); ?>
 			</a>
 			<h2 class="piece-title"><?php the_title(); ?></h2>
 		</div>

@@ -9,6 +9,7 @@
 
 
 		<small>
+			<a href="#top">top</a>
 			&copy; 2017 by <?php bloginfo( 'name' ); ?>. All Rights Reserved.
 		</small>
 	</footer>

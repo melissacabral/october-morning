@@ -6,6 +6,15 @@ add_theme_support( 'post-thumbnails' );
 
 add_theme_support( 'custom-background' );
 
+//define pixel width of automatic embeds for youtube, twitter, etc
+if ( ! isset( $content_width ) ) $content_width = 700;
+
+//make the file editor-style.css in your theme root
+add_editor_style();
+
+//add a custom image size for portfolio pieces
+//                 name, width, height, crop?
+add_image_size( 'banner', 1000, 300, true );
 
 /**
  * Custom Header
@@ -162,9 +171,9 @@ function oct_widget_areas(){
         'after_widget' => '</section>',
     ) );
     register_sidebar( array(
-        'name' => 'Home Featured Area',
-        'id' => 'home_area',
-        'description' => 'Appears on the static front page',
+        'name' => 'Shop Sidebar',
+        'id' => 'shop_sidebar',
+        'description' => 'Appears Next to the shop',
         'before_widget' => '<section class="widget %2$s" id="%1$s">',
         'after_widget' => '</section>',
     ) );
@@ -178,16 +187,75 @@ add_action( 'widgets_init', 'oct_widget_areas' );
 function oct_field_list( $label = '', $field = '' ){
     global $post;
     $values = get_post_meta( $post->ID, $field );
-    if( $values ):
+    if( isset($values[0]) && $values[0] != '' ):
     ?>
     <div class="<?php echo $field; ?>"><?php echo $label; ?>:        
-        <?php echo implode(', ', $values ); ?>
+        <b><?php echo implode(', ', $values ); ?></b>
     </div>
     <?php
     endif;
 }
 
+/**
+ * WooCommerce stuff
+ * @link https://docs.woocommerce.com/document/third-party-custom-theme-compatibility/
+ */
+remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
+
+add_action('woocommerce_before_main_content', 'my_theme_wrapper_start', 10);
+add_action('woocommerce_after_main_content', 'my_theme_wrapper_end', 10);
+
+function my_theme_wrapper_start() {
+  echo '<main class="content woocommerce-content">';
+}
+
+function my_theme_wrapper_end() {
+  echo '</main>';
+}
+//declare woocommerce support (suppress the admin nag)
+add_action( 'after_setup_theme', 'woocommerce_support' );
+function woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
+/**
+ * Ensure cart contents update when products are added to the cart via AJAX
+ * Used in conjunction with https://gist.github.com/DanielSantoro/1d0dc206e242239624eb71b2636ab148
+ */ 
+add_filter('woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment');
+ 
+function woocommerce_header_add_to_cart_fragment( $fragments ) {
+    global $woocommerce;    
+    ob_start();    
+    oct_header_cart();    
+    $fragments['a.cart-customlocation'] = ob_get_clean();    
+    return $fragments;    
+}
+function oct_header_cart(){
+    ?>
+    <a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php echo sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?> - <?php echo WC()->cart->get_cart_total(); ?></a>
+    <?php 
+}
+
+/**
+ * Attach Scripts and styles
+ */
+function oct_scripts(){
+    //attach jquery
+    wp_enqueue_script( 'jquery' );
+    //attach our custom script
+    $main = get_stylesheet_directory_uri() . '/js/main.js';
+    //                  handle,        url,      deps,      version, footer?
+    wp_enqueue_script( 'oct-main-js', $main, array('jquery'), '0.1', true );
+
+    //enqueue ALL styles including style.css
+    //style.css
+    wp_enqueue_style( 'style-css', get_stylesheet_uri() );
+    //google fonts
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Montserrat%7CSource+Sans+Pro' );
+}
+add_action('wp_enqueue_scripts', 'oct_scripts');
 
 
 
